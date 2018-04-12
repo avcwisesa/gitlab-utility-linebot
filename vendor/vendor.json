@@ -1,6 +1,19 @@
 {
 	"comment": "",
 	"ignore": "test",
-	"package": [],
+	"package": [
+		{
+			"checksumSHA1": "o0+6uQDysjh6+RsudtQDW3AOwec=",
+			"path": "github.com/joho/godotenv",
+			"revision": "1709ab122c988931ad53508747b3c061400c2984",
+			"revisionTime": "2018-04-05T05:36:34Z"
+		},
+		{
+			"checksumSHA1": "ty41WtlVv1XU1PA8YRLlxYWzZdg=",
+			"path": "github.com/line/line-bot-sdk-go/linebot",
+			"revision": "89f8344a7308aab388359cfce6afa71bd44649e8",
+			"revisionTime": "2018-04-03T02:30:26Z"
+		}
+	],
 	"rootPath": "github.com/avcwisesa/gitlab-refer-linebot"
 }

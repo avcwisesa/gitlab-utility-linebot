@@ -1,2 +1,5 @@
 # env variable
 .env
+
+# vendor packages
+vendor/*
