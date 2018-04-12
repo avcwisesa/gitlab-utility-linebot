@@ -2,12 +2,14 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
+	"html"
+	"io/ioutil"
+	"log"
 	"net/http"
 )
 
 const (
-	baseAPI = "gitlab.com/api/v4/projects"
+	baseAPI = "http://gitlab.com/api/v4/projects"
 	issue   = "/issues"
 )
 
@@ -17,7 +19,8 @@ type Client struct {
 	privateToken string
 }
 
-type gitlabIssue struct {
+// GitlabItem is a struct representing item on gitlab eg. Issue, Merge Request
+type GitlabItem struct {
 	Title  string `json:"title"`
 	WebURL string `json:"web_url"`
 }
@@ -31,26 +34,34 @@ func New(projectID, token string) *Client {
 }
 
 // GetIssue is a function for retrieving link to an issue with given IID
-func (c *Client) GetIssue(iid string) error {
+func (c *Client) GetIssue(iid string) (GitlabItem, error) {
 
 	req, _ := http.NewRequest("GET", c.baseURL+issue, nil)
 	req.Header.Add("private-token", c.privateToken)
 
 	q := req.URL.Query()
 	q.Add("iids[]", iid)
-	req.URL.RawQuery = q.Encode()
+	req.URL.RawQuery = html.UnescapeString(q.Encode())
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		return err
+		log.Println(err)
+		return GitlabItem{}, err
 	}
 	defer resp.Body.Close()
 
-	var respIssue gitlabIssue
-	json.NewDecoder(resp.Body).Decode(&respIssue)
+	bodyBytes, _ := ioutil.ReadAll(resp.Body)
 
-	fmt.Println(respIssue)
+	var f []interface{}
+	json.Unmarshal(bodyBytes, &f)
 
-	return nil
+	respMap := f[0].(map[string]interface{})
+
+	respIssue := GitlabItem{
+		Title:  respMap["title"].(string),
+		WebURL: respMap["web_url"].(string),
+	}
+
+	return respIssue, nil
 }
