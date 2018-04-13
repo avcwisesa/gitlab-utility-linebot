@@ -18,11 +18,22 @@ func main() {
 		log.Println("Error loading .env file")
 	}
 
+	channelSecret := os.Getenv("LINE_CHANNEL_SECRET")
+	channelAccessToken := os.Getenv("LINE_CHANNEL_TOKEN")
+
 	privateToken := os.Getenv("GITLAB_PRIVATE_TOKEN")
 	projectID := os.Getenv("GITLAB_PROJECT_ID")
 
-	bot, err = linebot.New(os.Getenv("ChannelSecret"), os.Getenv("ChannelAccessToken"))
+	port := os.Getenv("WEB_PORT")
+
+	log.Println(channelSecret)
+	log.Println(channelAccessToken)
+	log.Println(privateToken)
+	log.Println(projectID)
+
+	bot, err := linebot.New(channelSecret, channelAccessToken)
 	if err != nil {
+		log.Println(err)
 		log.Panic("Error initiating Linebot client")
 	}
 
@@ -34,5 +45,5 @@ func main() {
 
 	r.GET("/", handler.Ping)
 
-	r.Run()
+	r.Run(port)
 }
