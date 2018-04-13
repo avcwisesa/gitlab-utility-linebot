@@ -44,6 +44,7 @@ func main() {
 	r.Use(cors.Default())
 
 	r.GET("/", handler.Ping)
+	r.POST("/webhook", handler.MessageHandler)
 
 	r.Run(port)
 }
