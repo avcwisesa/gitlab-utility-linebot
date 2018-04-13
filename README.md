@@ -1,7 +1,19 @@
-# Gitlab Reference LINE Bot
-LINE Bot that gives link to gitlab issue/merge request refered in chats
+# Gitlab Utility LINE Bot
 
-### Setting up environment variable
+### Current Features
+- Get links to gitlab issue refered in chats
+- Get links to gitlab merge request refered in chats
+
+## Setting up
+
+### LINE channel variables
+
+1) Make a channel
+https://developers.line.me
+
+2) Save your channel secret & channel access token
+
+### Gitlab variables
 
 1) Issue a gitlab personal access token  
 https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
@@ -9,4 +21,5 @@ https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
 2) Find project id  
 https://docs.gitlab.com/ee/api/projects.html
 
-3) set environmental variable as listed in `.env.example`
+### ENV variable
+ - set environmental variable as listed in `.env.example`
