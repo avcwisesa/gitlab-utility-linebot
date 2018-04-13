@@ -23,3 +23,7 @@ https://docs.gitlab.com/ee/api/projects.html
 
 ### ENV variable
  - set environmental variable as listed in `.env.example`
+
+
+## Contributing
+Feel free to make PR!
